@@ -1,13 +1,18 @@
 import jwt from 'jwt-simple';
 import moment from 'moment';
+import dotenv from 'dotenv'; 
 
-// cLAVE SECRETA
- const secret = 'SECRET_KEY_pRoJeCt_Social_Network_';
+// Cargar las variables de entorno desde el archivo .env
+   dotenv.config()
+
+// Clave secreta
+const secret = process.env.SECRET_KEY;
 
  //Generar token
  const createToken = (user)=> {
     const payload = {
         userId : user._id, 
+        name: user.name, // quitar para el deploy
         role: user.role,
         //Fecha de emisión
         iat: moment().unix(),
