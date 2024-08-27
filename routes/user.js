@@ -1,32 +1,32 @@
-import { Router} from "express";
+import { Router } from "express";
 const router = Router();
-import {testUser, register, login, profile, listUsers, updateUser, uploadAvatar } from "../controllers/user.js";
+import { testUser, register, login, profile, listUsers, updateUser, uploadAvatar, avatar } from "../controllers/user.js";
 import { ensureAuth } from "../middlewares/auth.js";
-import multer from 'multer';
+import multer from "multer";
+import User from "../models/users.js"
+import { checkEntityExists } from "../middlewares/checkEntityExists.js"
 
-//Configuración de subida de Archivos
+// Configuración de subida de archivos
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "./uploads/avatar")
-    },
-    filename: (re, file, cb) => {
-        cb(null, "avatar-"+Date.now()+ "-"+file.originalname);
-    }
+  destination: (req, file, cb) => {
+    cb(null, "./uploads/avatars")
+  },
+  filename: (req, file, cb) => {
+    cb(null, "avatar-"+Date.now()+"-"+file.originalname);
+  }
 });
 
 const uploads = multer({storage});
 
-//Definir las rutas
-
-
+// Definir las rutas
 router.get('/test-user', ensureAuth, testUser);
 router.post('/register', register);
 router.post('/login', login);
 router.get('/profile/:id', ensureAuth, profile);
 router.get('/list/:page?', ensureAuth, listUsers);
 router.put('/update', ensureAuth, updateUser);
-router.post('/upload-avatar', [uploads.single("file0")], uploadAvatar);
+router.post('/upload-avatar', [ensureAuth, checkEntityExists(User, 'user_id'), uploads.single("file0")], uploadAvatar);
+router.get('/avatar/:file', avatar);
 
-
-//Exportar el Router
+// Exportar el Router
 export default router;
