@@ -1,6 +1,6 @@
-import Follow from "../models/follows.js";
-import User from "../models/users.js";
-import { followUserIds } from "../services/followServices.js";
+import Follow from "../models/follows.js"
+import User from "../models/users.js"
+import { followUserIds } from "../services/followServices.js"
 
 
 // Método de prueba
@@ -115,7 +115,6 @@ export const saveFollow = async (req, res) =>{
   }
 }
 
-
 // Método para eliminar un follow (dejar de seguir)
 export const unfollow = async (req, res) => {
   try {
@@ -152,6 +151,7 @@ export const unfollow = async (req, res) => {
     });
   }
 }
+
 // Método para listar usuarios que estoy siguiendo
 export const following = async (req, res) => {
   try {
