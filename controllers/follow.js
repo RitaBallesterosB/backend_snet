@@ -13,7 +13,7 @@ export const testFollow = (req, res) => {
 // Método para guardar un follow (seguir a otro usuario)
 export const saveFollow = async (req, res) =>{
   try {
-    // Obtener datos del body
+    // Obtener datos de la persona que quiero seguir desde el body
     const { followed_user } = req.body;
 
     // Obtener el id del usuario autenticado (login) desde el token
